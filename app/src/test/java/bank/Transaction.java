@@ -1,21 +1,26 @@
 package bank;
 
 import java.time.LocalDate;
-import java.time.chrono.ChronoLocalDate;
 
 public class Transaction {
-    Double credit;
-    Double debit;
+    Number credit;
+    Number debit;
     LocalDate date;
-    public Transaction(Double credit, Double debit) {
+    public Transaction(Number credit, Number debit) {
         this.credit = credit;
         this.debit = debit;
         this.date = LocalDate.now();
     }
+
+    @Override
+    public String toString() {
+        // Formats printout of Transaction objects
+        // This is for dev visibility and not for the functionality of the class
+        return "Transaction: Credit=" + credit + ", Debit=" + debit + ", Date=" + date;
+    }
     public static void main(String[] args) {
-        Transaction pay1 = new Transaction(1000.00, null);
-        System.out.println(pay1.credit + " & " + pay1.debit);
-        Transaction pay2 = new Transaction(null, 500.00);
-        System.out.println(pay2.credit + " & " + pay2.debit);
+//        Transaction pay1 = new Transaction(1000.00, null);
+//        System.out.println(pay1.credit + " & " + pay1.debit + " & " + pay1.date);
+
     }
 }
