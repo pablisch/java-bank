@@ -44,12 +44,5 @@ public class Account {
     }
 
     public static void main(String[] args) {
-        Account account = new Account();
-        account.deposit(1000.00);
-        account.withdraw(700.00);
-        account.deposit(400);
-        account.withdraw(150);
-//        account.printList();
-        System.out.println(account.generateStatement());
     }
 }
