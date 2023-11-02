@@ -18,9 +18,6 @@ public class Account {
     }
 
     public String generateStatement() {
-        // collate transaction in reverse order
-        // format output, possibly using toString override
-        // add header line
         double balance = 0.0;
         ArrayList<String> statementLines = new ArrayList<>();
         for (Transaction transaction : this.transactionList) {
@@ -28,8 +25,8 @@ public class Account {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             String formattedDate = transaction.date.format(formatter);
 
-                if (transaction.credit != null) balance += transaction.credit;
-                else balance -= transaction.debit;
+            if (transaction.credit != null) balance += transaction.credit;
+            else balance -= transaction.debit;
 
             String formattedCredit = String.format("%.2f", transaction.credit);
             String formattedDebit = String.format("%.2f", transaction.debit);
