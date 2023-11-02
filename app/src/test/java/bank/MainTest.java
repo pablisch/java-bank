@@ -13,15 +13,14 @@ public class MainTest {
         return date.format(formatter);
     }
     @Test
-    public void testReturnsHeaderWhenThereAreNoTransactions() {
+    public void testReturnsHeaderWhenThereAreNoTransactions() throws Exception {
         Account account = new Account();
-        account.deposit(1000);
         String expected = "date || credit || debit || balance";
         String actual = account.generateStatement();
         Assert.assertEquals(expected, actual);
     }
     @Test
-    public void testReturnsProperlyFormattedStatementWithSingleDeposit() {
+    public void testReturnsProperlyFormattedStatementWithSingleDeposit() throws Exception {
         Account account = new Account();
         account.deposit(1000);
         String expected = "date || credit || debit || balance\n"
@@ -39,7 +38,7 @@ public class MainTest {
         Assert.assertEquals(expected, actual);
     }
     @Test
-    public void testReturnsProperlyFormattedStatementWithMultipleTransactionsInReverseOrder() {
+    public void testReturnsProperlyFormattedStatementWithMultipleTransactionsInReverseOrder() throws Exception {
         Account account = new Account();
         account.deposit(1000);
         account.withdraw(500);

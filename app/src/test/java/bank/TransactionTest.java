@@ -17,6 +17,12 @@ public class TransactionTest {
         Double credit = transaction.credit;
         Double expected = 1000.0;
         Assert.assertEquals(expected, credit);
+    }@Test
+    public void TestReturnsNullDepositTransactionObjectNullCreditValue() {
+        Transaction transaction = new Transaction(null, null);
+        Double credit = transaction.credit;
+        Double expected = null;
+        Assert.assertEquals(expected, credit);
     }
     @Test
     public void TestReturnsWithdrawalTransactionObjectWithNullCreditValue() {
@@ -29,6 +35,13 @@ public class TransactionTest {
         Transaction transaction = new Transaction(null, 1000.0);
         Double debit = transaction.debit;
         Double expected = 1000.0;
+        Assert.assertEquals(expected, debit);
+    }
+    @Test
+    public void TestReturnsNullWithdrawalTransactionObjectNullCreditValue() {
+        Transaction transaction = new Transaction(null, null);
+        Double debit = transaction.debit;
+        Double expected = null;
         Assert.assertEquals(expected, debit);
     }
     @Test

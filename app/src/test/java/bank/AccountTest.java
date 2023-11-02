@@ -6,6 +6,9 @@ import org.junit.Test;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+
 public class AccountTest {
     public static String getDate() {
         LocalDate date = LocalDate.now();
@@ -17,25 +20,57 @@ public class AccountTest {
         Account account = new Account();
         int numOfTransactions = account.transactionList.size();
         int expected = 0;
-        Assert.assertEquals(expected, numOfTransactions);
+        assertEquals(expected, numOfTransactions);
     }
     @Test
-    public void TestDepositShouldAddAnItemToTheTransactionListArrayList() {
+    public void TestDepositShouldAddAnItemToTheTransactionListArrayList() throws Exception {
         Account account = new Account();
         account.deposit(1000);
         int numOfTransactions = account.transactionList.size();
         int expected = 1;
-        Assert.assertEquals(expected, numOfTransactions);
+        assertEquals(expected, numOfTransactions);
     }
     @Test
-    public void TestMultipleDepositsShouldAddEqualNumberOfItemsToTheTransactionListArrayList() {
+    public void testDepositWithNullValueThrowsException() {
+        Account account = new Account();
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            account.deposit(null);
+        });
+
+        String expectedMessage = "Deposit value cannot be null";
+        String actualMessage = exception.getMessage();
+        assertEquals(expectedMessage, actualMessage);
+
+        int numOfTransactions = account.transactionList.size();
+        int expected = 0;
+        assertEquals(expected, numOfTransactions);
+    }
+    @Test
+    public void TestMultipleDepositsShouldAddEqualNumberOfItemsToTheTransactionListArrayList() throws Exception {
         Account account = new Account();
         account.deposit(1000);
         account.deposit(300.00);
         account.deposit(10.0);
         int numOfTransactions = account.transactionList.size();
         int expected = 3;
-        Assert.assertEquals(expected, numOfTransactions);
+        assertEquals(expected, numOfTransactions);
+    }
+    @Test
+    public void testWithdrawalWithNullValueThrowsException() {
+        Account account = new Account();
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            account.withdraw(null);
+        });
+
+        String expectedMessage = "Withdrawal value cannot be null";
+        String actualMessage = exception.getMessage();
+        assertEquals(expectedMessage, actualMessage);
+
+        int numOfTransactions = account.transactionList.size();
+        int expected = 0;
+        assertEquals(expected, numOfTransactions);
     }
     @Test
     public void TestWithdrawalShouldAddAnItemToTheTransactionListArrayList() {
@@ -43,7 +78,7 @@ public class AccountTest {
         account.withdraw(1000);
         int numOfTransactions = account.transactionList.size();
         int expected = 1;
-        Assert.assertEquals(expected, numOfTransactions);
+        assertEquals(expected, numOfTransactions);
     }
     @Test
     public void TestMultipleWithdrawalsShouldAddEqualNumberOfItemsToTheTransactionListArrayList() {
@@ -53,23 +88,23 @@ public class AccountTest {
         account.withdraw(10.0);
         int numOfTransactions = account.transactionList.size();
         int expected = 3;
-        Assert.assertEquals(expected, numOfTransactions);
+        assertEquals(expected, numOfTransactions);
     }
     @Test
     public void TestGenerateStatementReturnsHeaderWhenNoTransactionsHaveBeenMade() {
         Account account = new Account();
         String expected = "date || credit || debit || balance";
         String actual = account.generateStatement();
-        Assert.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
     @Test
-    public void testGenerateStatementReturnsProperlyFormattedStatementWithSingleDeposit() {
+    public void testGenerateStatementReturnsProperlyFormattedStatementWithSingleDeposit() throws Exception {
         Account account = new Account();
         account.deposit(1000);
         String expected = "date || credit || debit || balance\n"
                 + MainTest.getDate() + " || 1000.00 || - || 1000.00";
         String actual = account.generateStatement();
-        Assert.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
     @Test
     public void testGenerateStatementReturnsProperlyFormattedStatementWithSingleWithdrawal() {
@@ -78,10 +113,10 @@ public class AccountTest {
         String expected = "date || credit || debit || balance\n"
                 + MainTest.getDate() + " || - || 1000.00 || -1000.00";
         String actual = account.generateStatement();
-        Assert.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
     @Test
-    public void testGenerateStatementReturnsProperlyFormattedStatementWithMultipleTransactionsInReverseOrder() {
+    public void testGenerateStatementReturnsProperlyFormattedStatementWithMultipleTransactionsInReverseOrder() throws Exception {
         Account account = new Account();
         account.deposit(1000);
         account.withdraw(500);
@@ -93,7 +128,7 @@ public class AccountTest {
                 + MainTest.getDate() + " || - || 500.00 || 500.00\n"
                 + MainTest.getDate() + " || 1000.00 || - || 1000.00";
         String actual = account.generateStatement();
-        Assert.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 }
 
