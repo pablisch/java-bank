@@ -6,22 +6,31 @@ import java.util.ArrayList;
 public class Account {
     ArrayList<Transaction> transactionList = new ArrayList<>();
     public void deposit(Number credit) {
-        Transaction transaction = new Transaction(credit, null);
-        this.transactionList.add(transaction);
+        Double creditDouble = credit.doubleValue();
+        Transaction transaction = new Transaction(creditDouble, null);
+        this.transactionList.add(0, transaction);
     }
 
     public void withdraw(Number debit) {
-        Transaction transaction = new Transaction(null, debit);
-        this.transactionList.add(transaction);
+        Double debitDouble = debit.doubleValue();
+        Transaction transaction = new Transaction(null, debitDouble);
+        this.transactionList.add(0, transaction);
     }
 
     public String generateStatement() {
-        return "you is broke!";
+
+        // collate transaction in reverse order
+        // format output, possibly using toString override
+        // add header line
+        return "you is broke!\nyou is stonez\by broke!";
     }
     public void printList() {
         // For dev visibility and not for the functionality of the class
+        double balance = 0.0;
+
         for (Transaction transaction : this.transactionList) {
-            System.out.println(transaction);
+            balance = balance + transaction.credit - transaction.debit;
+            System.out.print(transaction + "" + balance + transaction.credit + "\n" );
             // The above will invoke the custom toString() method in Transaction
         }
     }
@@ -33,5 +42,6 @@ public class Account {
         account.deposit(400);
         account.withdraw(150);
         account.printList();
+        System.out.println(account.generateStatement());
     }
 }
