@@ -23,12 +23,11 @@ public class Transaction {
         String formattedCredit = String.format("%.2f", credit);
         String formattedDebit = String.format("%.2f", debit);
 
-        return formattedDate + " || " + (credit != null ? formattedCredit : "-") + " || " + (debit != null ? formattedDebit : "-") + " || ";
+        return formattedDate + " || " + (credit != null ? formattedCredit : "-") + " || "
+                + (debit != null ? formattedDebit : "-") + " || ";
     }
 
     public static void main(String[] args) {
-//        Transaction pay1 = new Transaction(1000.00, null);
-//        System.out.println(pay1.credit + " & " + pay1.debit + " & " + pay1.date);
 
     }
 }

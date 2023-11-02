@@ -1,6 +1,6 @@
 package bank;
 
-import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Account {
@@ -8,31 +8,42 @@ public class Account {
     public void deposit(Number credit) {
         Double creditDouble = credit.doubleValue();
         Transaction transaction = new Transaction(creditDouble, null);
-        this.transactionList.add(0, transaction);
+        this.transactionList.add(transaction);
     }
 
     public void withdraw(Number debit) {
         Double debitDouble = debit.doubleValue();
         Transaction transaction = new Transaction(null, debitDouble);
-        this.transactionList.add(0, transaction);
+        this.transactionList.add(transaction);
     }
 
     public String generateStatement() {
-
         // collate transaction in reverse order
         // format output, possibly using toString override
         // add header line
-        return "you is broke!\nyou is stonez\by broke!";
-    }
-    public void printList() {
-        // For dev visibility and not for the functionality of the class
         double balance = 0.0;
-
+        ArrayList<String> statementLines = new ArrayList<>();
         for (Transaction transaction : this.transactionList) {
-            balance = balance + transaction.credit - transaction.debit;
-            System.out.print(transaction + "" + balance + transaction.credit + "\n" );
-            // The above will invoke the custom toString() method in Transaction
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String formattedDate = transaction.date.format(formatter);
+
+                if (transaction.credit != null) balance += transaction.credit;
+                else balance -= transaction.debit;
+
+            String formattedCredit = String.format("%.2f", transaction.credit);
+            String formattedDebit = String.format("%.2f", transaction.debit);
+            String formattedBalance = String.format("%.2f", balance);
+
+            String statementLine = formattedDate + " || " + (transaction.credit != null
+                    ? formattedCredit : "-") + " || " + (transaction.debit != null
+                    ? formattedDebit : "-") + " || " + formattedBalance;
+            statementLines.add(0, statementLine);
         }
+        String header = "date || credit || debit || balance";
+        statementLines.add(0, header);
+        //        System.out.println(statement);
+        return String.join("\n", statementLines);
     }
 
     public static void main(String[] args) {
@@ -41,7 +52,7 @@ public class Account {
         account.withdraw(700.00);
         account.deposit(400);
         account.withdraw(150);
-        account.printList();
+//        account.printList();
         System.out.println(account.generateStatement());
     }
 }
